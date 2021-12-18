@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  app:
+    image: cynax/twitter-clone-auth-api:latest
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    networks:
+      - twitter_clone_default
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db_auth_api
+      MYSQL_PORT: 3306
+    ports:
+      - 8398:3306
+    networks:
+      - twitter_clone_default
+
+
+networks:
+  twitter_clone_default:
+    driver: bridge
+    name: twitter_clone_network
