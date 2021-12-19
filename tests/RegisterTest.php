@@ -103,4 +103,21 @@ class RegisterTest extends TestCase
         $this->assertNotNull($user);
         $user->delete();
     }
+
+    public function testUniqueUsernameEmail()
+    {
+        User::create([
+            'username' => 'testuser',
+            'email' => 'test@gmail.com',
+            'password' => '123456',
+        ]);
+
+        $response = $this->call('POST', $this->endpoint, [
+            'username' => 'testuser',
+            'email' => 'test@gmail.com',
+            'password' => 'asdasd',
+        ]);
+
+        assertEquals(422, $response->status());
+    }
 }
