@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\assertEquals;
@@ -73,5 +74,31 @@ class RegisterTest extends TestCase
         ]);
 
         $this->assertEquals(422, $response->status());
+    }
+
+    public function testIfRegisteringSavesData()
+    {
+        /**
+         * deletes the existing testuser before testing
+         */
+        $username = 'testuser';
+        $user = User::where('username', $username)->first();
+        if (!is_null($user)) {
+            $user->delete();
+        }
+        /**
+         * now the testuser doesnt exist anymore. good to go
+         */
+
+        $response = $this->call('POST', $this->endpoint, [
+            'username' => $username,
+            'email' => 'test@gmail.com',
+            'password' => '123456',
+        ]);
+        $this->assertEquals(200, $response->status());
+
+        $user = User::where('username', $username)->first();
+
+        $this->assertNotNull($user);
     }
 }
