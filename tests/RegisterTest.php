@@ -25,6 +25,7 @@ class RegisterTest extends TestCase
         ]);
 
         $this->assertEquals(200, $response->status());
+        User::where('username', 'cynax')->first()->delete();
     }
 
     public function testWithBadUsername()
@@ -100,5 +101,6 @@ class RegisterTest extends TestCase
         $user = User::where('username', $username)->first();
 
         $this->assertNotNull($user);
+        $user->delete();
     }
 }
