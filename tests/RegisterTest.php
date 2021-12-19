@@ -106,7 +106,7 @@ class RegisterTest extends TestCase
 
     public function testUniqueUsernameEmail()
     {
-        User::create([
+        $test_user = User::create([
             'username' => 'testuser',
             'email' => 'test@gmail.com',
             'password' => '123456',
@@ -119,5 +119,7 @@ class RegisterTest extends TestCase
         ]);
 
         assertEquals(422, $response->status());
+
+        $test_user->delete();
     }
 }
