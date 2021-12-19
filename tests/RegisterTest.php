@@ -66,7 +66,7 @@ class RegisterTest extends TestCase
 
         $this->assertEquals(422, $response->status());
 
-        $response = $this->call('POST', $this->endpoinst, [
+        $response = $this->call('POST', $this->endpoint, [
             'username' => 'cynax',
             'email' => 'asd@asd.com',
             'password' => Str::random(126),
