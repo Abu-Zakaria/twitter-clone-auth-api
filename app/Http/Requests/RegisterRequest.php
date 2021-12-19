@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Anik\Form\FormRequest;
+use App\Models\User;
 
 class RegisterRequest extends FormRequest
 {
@@ -22,5 +23,10 @@ class RegisterRequest extends FormRequest
 
     public function register()
     {
+        return User::create([
+            'username' => $this->username,
+            'email' => $this->email,
+            'password' => password_hash($this->password, PASSWORD_DEFAULT),
+        ]);
     }
 }
