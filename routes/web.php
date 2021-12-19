@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,4 +17,15 @@
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
+});
+
+$router->group([
+    'prefix' => 'api',
+], function ($router) {
+    $router->post('login', 'AuthController@login');
+    $router->post('register', 'AuthController@register');
+    $router->group([
+        'middleware' => 'api',
+    ], function () {
+    });
 });
